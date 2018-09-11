@@ -1,0 +1,25 @@
+{
+  "name": "otherbot-client",
+  "version": "0.1.0",
+  "description": "An IRC client library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hellomouse/otherbot-new"
+  },
+  "keywords": [
+    "irc"
+  ],
+  "author": "iczero",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hellomouse/otherbot-new/issues"
+  },
+  "homepage": "https://github.com/hellomouse/otherbot-new#readme",
+  "dependencies": {
+    "linkedlist": "^1.0.1"
+  }
+}
