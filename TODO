@@ -1,4 +1,58 @@
 NOTE: this is currently a random collection of ideas that may or may not be
 relevant. as such, don't actually expect any of this to even make sense
 
-for channels, store the last time WHO was issued
+api:
+    ability to disable/enable capabilities
+    irc modes parser and composer
+    modularity:
+        make it easy to add support for more things in the core
+    Channel object
+        Channel#setMode, Channel#kick, etc
+        list of users
+    User object
+        channels they are in
+        is this user currently tracked? (does the client receive QUIT/NICK/etc about them?)
+            untracked users cannot be reliably messaged
+    ChannelRegistry object
+        stores channels
+        get channel by name
+    UserRegistry object
+        stores users and the channels they are in
+    ServerInfo object
+        stores server ISUPPORT info, caps, etc
+    PendingCommand object
+        it may have succeeded, it may have failed
+        array in client of PendingCommand objects that are still pending
+
+general protocol:
+    use the streaming parser
+    be able to tell which commands errored and report back errors
+    command sent callbacks (out of queue)
+    be able to handle commands that return data
+    be able to handle commands which have multiple lines of results (WHO, WHOIS, etc)
+    a humongous list of acknowledgeable commands that are yet to be acknowledged or errored
+        properly return errors to whatever caused them
+            see PendingCommand object
+
+send queues:
+    queue delay to set time between queue output
+    acutally reliable queue bursting
+    each queue has many priorities
+
+    main server queue:
+        level 0: really important stuff (PING, CAP, login, etc)
+        level 1: server stuff (nick changes, join, part, etc)
+        level 2: channel stuff (KICK, MODE, etc)
+        level 3: channel messages (per-channel queues feed into this)
+        level 4: channel/user tracking (WHO, WHOIS, cmode tracking, etc
+    per-channel message queues:
+        supports multiple priorities (default 3)
+        queue delay/bursting is handled independently of main queue
+        per-channel message queue delay is 1000ms, main queue delay is 500ms
+        main queue will fetch stuff from each channel queue
+
+channel tracking:
+    tracks users, channel mode lists (ban lists, etc), will determine chanop-only lists
+    use WHOX if available
+        record last WHO sent
+
