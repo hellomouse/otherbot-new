@@ -50,6 +50,7 @@ send queues:
         queue delay/bursting is handled independently of main queue
         per-channel message queue delay is 1000ms, main queue delay is 500ms
         main queue will fetch stuff from each channel queue
+        fairness: a channel with a lot of queued messages will not interrupt other channels
 
 channel tracking:
     tracks users, channel mode lists (ban lists, etc), will determine chanop-only lists

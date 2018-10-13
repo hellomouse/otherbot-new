@@ -1,5 +1,11 @@
-const EventEmitter = require('events');
-const LinkedList = require('linkedlist');
+import EventEmitter from 'events';
+import LinkedList from './linkedlist';
+
+interface MessageQueueOpts {
+  queueNum: number;
+  delay: number;
+  processFn: () => void; // this might possibly be changed to an event
+}
 
 // TODO: per-channel queues
 /* main queue fetches items from per-channel queues
@@ -15,6 +21,14 @@ const LinkedList = require('linkedlist');
  */
 /** Represents a message queue for the client */
 class MessageQueue extends EventEmitter {
+  opts: MessageQueueOpts;
+  delay: number;
+  processFn: () => void;
+  queues: Array<LinkedList>;
+  _lastSend: number;
+  _burstCount: number;
+  _currentTimer: null;
+  queueNum: number;
   /**
    * Constructs a new message queue
    * Priority 0 is highest priority
@@ -23,7 +37,7 @@ class MessageQueue extends EventEmitter {
    * @param {number} opts.delay Delay between sending messages in the queue
    * @param {Function} opts.processFn Function called when output is available
    */
-  constructor(opts) {
+  constructor(opts: MessageQueueOpts) {
     super();
     this.opts = opts;
     this.delay = opts.delay;
@@ -35,15 +49,16 @@ class MessageQueue extends EventEmitter {
     /** How many messages have been sent as part of the "burst" */
     this._burstCount = 0;
     this._currentTimer = null;
+    this.queueNum = 0;
   }
   /**
    * Add an object to the queue
    * @param {any} data Object to push to the queue
-   * @param {number} priority Queue priority to push data in
+   * @param {number} [priority=0] Queue priority to push data in
    * @return {boolean} Promise resolving to true when the data is sent or false
    *                   if the queue was cleared before the data was sent
    */
-  push(data, priority = 0) {
+  push(data: any, priority: number = 0): Promise<boolean> {
     return new Promise(resolve => {
       this.queues[priority].unshift([data, resolve]);
       this._timerStart();
@@ -53,7 +68,7 @@ class MessageQueue extends EventEmitter {
    * Get the next item from the queue, by priority
    * @return {any} The item taken from the queue
    */
-  _next() {
+  _next(): any {
     // find next piece of data in queue
     for (let i = 0; i < this.queueNum; i++) {
       if (this.queues[i].length > 0) return this.queues[i].pop();
@@ -75,4 +90,4 @@ class MessageQueue extends EventEmitter {
   }
 }
 
-module.exports = MessageQueue;
+export default MessageQueue;

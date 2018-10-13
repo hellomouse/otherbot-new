@@ -1,9 +1,11 @@
 {
   "devDependencies": {
     "@hellomouse/eslint-config": "^1.1.4",
+    "@types/node": "^12.7.7",
     "eslint": "^6.4.0",
     "eslint-plugin-jsdoc": "^15.9.2",
-    "lerna": "^3.16.4"
+    "lerna": "^3.16.4",
+    "typescript": "^3.6.3"
   },
   "name": "otherbot-new",
   "description": "The new otherbot. May or may not be vaporware",

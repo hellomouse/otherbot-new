@@ -1,24 +1,33 @@
-const { Transform } = require('stream');
-const numerics = require('./numerics.json');
+import { Transform, TransformCallback } from 'stream';
+import numerics from './numerics';
 
 /** Class representing an IRC message */
 class IRCMessage {
+  public tags: {
+    [key: string]: string;
+  };
+  public raw: string;
+  public prefix: string;
+  public numeric: number;
+  public command: string;
+  public args: string[];
+
   /**
    * Constructor for the class
    * @param {string} message Raw IRC message to parse
    */
-  constructor(message) {
+  constructor(message: string) {
     this.raw = message;
-    let messageSplit = message.split(' ');
-    let rawTags = null;
-    this.prefix = null;
+    const messageSplit = message.split(' ');
+    let rawTags: string | null = null;
+    this.prefix = '';
     let commandIndex = 0;
     this.tags = {};
-    this.numeric = null;
-    this.command = null;
+    this.numeric = 0;
+    this.command = '';
     this.args = [];
     for (let i = 0; i < messageSplit.length; i++) {
-      let part = messageSplit[i];
+      const part = messageSplit[i];
       if (part[0] === '@') rawTags = part;
       else if (part[0] === ':') this.prefix = part.slice(1);
       else { // end of header
@@ -29,14 +38,14 @@ class IRCMessage {
     }
     // TODO: don't split on backslashes
     if (rawTags) {
-      let t = rawTags.split(';');
+      const t = rawTags.split(';');
       for (let tag of t) {
         let [key, value] = tag.split('=');
         this.tags[key] = value;
       }
     }
     this.command = messageSplit[commandIndex];
-    let maybeNumeric = +this.command;
+    const maybeNumeric = +this.command;
     if (!Number.isNaN(maybeNumeric)) {
       this.command = numerics[this.command];
       this.numeric = maybeNumeric;
@@ -54,32 +63,41 @@ class IRCMessage {
 
 /** Stream-based IRC message parser */
 class Parser extends Transform {
+  public static numerics = numerics;
+  opts: {
+    encoding?: string;
+  };
+  encoding: string;
+  _partialData: string | string[];
+
   /**
    * Constructs a new Parser
    * @param {object} opts Options for the parser
    * @param {string} opts.encoding The encoding for data coming in
    */
-  constructor(opts) {
+  constructor(opts?: { encoding?: string }) {
     super({ readableObjectMode: true });
     if (!opts) opts = {};
     this.opts = opts;
     this.encoding = opts.encoding || 'utf-8';
     this._partialData = '';
   }
+
   /**
    * Push data to the stream to be parsed
-   * @param {Buffer} data The data to process
+   * @param {(Buffer|string)} chunk The data to process
    * @param {string} encoding The encoding of the string
-   * @param {Function} callback Called when the chunk is processed
+   * @param {TransformCallback} callback Called when the chunk is processed
    */
-  _transform(data, encoding, callback) {
-    data = this._partialData + data.toString(this.encoding);
+  _transform(chunk: any, encoding: string, callback: TransformCallback): void {
+    let data: string = this._partialData + chunk.tostring(this.encoding);
     let messages = data.split(/[\r\n]+/g);
     this._partialData = messages.splice(-1, 1); // store partial line for later
-    messages = messages.filter(m => m !== '');
+    messages = messages.filter((m: string) => m !== '');
     for (let message of messages) this.push(new IRCMessage(message));
-    callback(null);
+    callback();
   }
 }
 
-module.exports = Parser;
+export default Parser;
+export { IRCMessage };

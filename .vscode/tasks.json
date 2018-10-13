@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "echo",
+            "label": "eslint",
             "type": "shell",
-            "command": "echo Hello"
+            "command": "eslint --fix . !node_modules/**/*.js"
         }
     ]
 }
