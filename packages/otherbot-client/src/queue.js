@@ -30,7 +30,9 @@ class MessageQueue extends EventEmitter {
     this.processFn = opts.processFn;
     this.queues = [];
     for (let i = 0; i < opts.queueNum; i++) this.queues.push(new LinkedList());
-    this._lastTimestamp = 0;
+    /** Time of last sent message */
+    this._lastSend = 0;
+    /** How many messages have been sent as part of the "burst" */
     this._burstCount = 0;
     this._currentTimer = null;
   }
@@ -38,13 +40,13 @@ class MessageQueue extends EventEmitter {
    * Add an object to the queue
    * @param {any} data Object to push to the queue
    * @param {Number} priority Queue priority to push data in
-   * @return {Promise} Promise resolving to true when the data is sent or false
+   * @return {Boolean} Promise resolving to true when the data is sent or false
    *                   if the queue was cleared before the data was sent
    */
   push(data, priority = 0) {
     return new Promise(resolve => {
       this.queues[priority].unshift([data, resolve]);
-      this.emit('newData');
+      this._timerStart();
     });
   }
   /**
@@ -54,10 +56,22 @@ class MessageQueue extends EventEmitter {
   _next() {
     // find next piece of data in queue
     for (let i = 0; i < this.queueNum; i++) {
-      if (this.queues[i].length > 0) {
-        return this.queues[i].pop();
-      }
+      if (this.queues[i].length > 0) return this.queues[i].pop();
     }
+  }
+  /** Process new items in queue */
+  _timerStart() {
+    // if a timer is already running, return
+    if (this._currentTimer) return;
+    this._timerNext();
+  }
+  /** Called by timer to process next item in queue */
+  _timerNext() {
+
+  }
+  /** Called by timer after there is no more data */
+  _timerFinished() {
+
   }
 }
 

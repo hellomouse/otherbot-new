@@ -1,6 +1,29 @@
 {
-	"devDependencies": {
-		"lerna": "^3.3.0"
-	},
-	"name": "otherbot-new"
+  "devDependencies": {
+    "eslint": "^5.7.0",
+    "eslint-config-google": "^0.10.0",
+    "lerna": "^3.4.3"
+  },
+  "name": "otherbot-new",
+  "description": "The new otherbot. May or may not be vaporware",
+  "version": "0.1.0",
+  "dependencies": {
+    "debug": "^4.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hellomouse/otherbot-new.git"
+  },
+  "keywords": [
+    "irc"
+  ],
+  "author": "hellomouse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hellomouse/otherbot-new/issues"
+  },
+  "homepage": "https://github.com/hellomouse/otherbot-new#readme"
 }

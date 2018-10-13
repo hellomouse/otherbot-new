@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/hellomouse/otherbot-new#readme",
   "dependencies": {
-    "linkedlist": "^1.0.1"
+    "linkedlist": "^1.0.1",
+    "irc-stream-parser": "^0.1.0"
   }
 }
