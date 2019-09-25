@@ -12,10 +12,11 @@ class Client extends EventEmitter {
   constructor(config) {
     super();
     this.config = config;
+    /** @type {net.SocketConnectOpts} */
     let opts = {
       port: this.config.irc.port,
       host: this.config.irc.host,
-      localaddress: this.config.bindhost
+      localAddress: this.config.bindhost
     };
     if (this.config.ssl) {
       if (this.config.sasl && this.config.sasl.type === 'certfp') { // type could be a Symbol
