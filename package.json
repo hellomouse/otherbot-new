@@ -1,14 +1,14 @@
 {
   "devDependencies": {
-    "eslint": "^5.7.0",
-    "eslint-config-google": "^0.10.0",
-    "lerna": "^3.4.3"
+    "eslint": "^6.4.0",
+    "eslint-config-google": "^0.14.0",
+    "lerna": "^3.16.4"
   },
   "name": "otherbot-new",
   "description": "The new otherbot. May or may not be vaporware",
   "version": "0.1.0",
   "dependencies": {
-    "debug": "^4.1.0"
+    "debug": "^4.1.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
