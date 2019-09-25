@@ -5,7 +5,7 @@ const numerics = require('./numerics.json');
 class IRCMessage {
   /**
    * Constructor for the class
-   * @param {String} message Raw IRC message to parse
+   * @param {string} message Raw IRC message to parse
    */
   constructor(message) {
     this.raw = message;
@@ -56,8 +56,8 @@ class IRCMessage {
 class Parser extends Transform {
   /**
    * Constructs a new Parser
-   * @param {Object} opts Options for the parser
-   * @param {String} opts.encoding The encoding for data coming in
+   * @param {object} opts Options for the parser
+   * @param {string} opts.encoding The encoding for data coming in
    */
   constructor(opts) {
     super({ readableObjectMode: true });
@@ -69,7 +69,7 @@ class Parser extends Transform {
   /**
    * Push data to the stream to be parsed
    * @param {Buffer} data The data to process
-   * @param {String} encoding The encoding of the string
+   * @param {string} encoding The encoding of the string
    * @param {Function} callback Called when the chunk is processed
    */
   _transform(data, encoding, callback) {

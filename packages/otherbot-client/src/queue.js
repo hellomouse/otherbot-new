@@ -18,9 +18,9 @@ class MessageQueue extends EventEmitter {
   /**
    * Constructs a new message queue
    * Priority 0 is highest priority
-   * @param {Object} opts Options for the message queue
-   * @param {Number} opts.queueNum Number of queue priorities to create
-   * @param {Number} opts.delay Delay between sending messages in the queue
+   * @param {object} opts Options for the message queue
+   * @param {number} opts.queueNum Number of queue priorities to create
+   * @param {number} opts.delay Delay between sending messages in the queue
    * @param {Function} opts.processFn Function called when output is available
    */
   constructor(opts) {
@@ -39,8 +39,8 @@ class MessageQueue extends EventEmitter {
   /**
    * Add an object to the queue
    * @param {any} data Object to push to the queue
-   * @param {Number} priority Queue priority to push data in
-   * @return {Boolean} Promise resolving to true when the data is sent or false
+   * @param {number} priority Queue priority to push data in
+   * @return {boolean} Promise resolving to true when the data is sent or false
    *                   if the queue was cleared before the data was sent
    */
   push(data, priority = 0) {

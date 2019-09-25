@@ -1,8 +1,8 @@
 /**
-* Strips formatting from IRC messages
-* @param {string} msg
-* @return {string}
-*/
+ * Strips formatting from IRC messages
+ * @param {string} msg
+ * @return {string}
+ */
 function strip_formatting(msg) {
   /* eslint-disable no-control-regex */
   let ccodes = ['\\x0f', '\\x16', '\\x1d', '\\x1f', '\\x02', '\\x03([0-9][0-6]?)?,?([0-9][0-6]?)?'];

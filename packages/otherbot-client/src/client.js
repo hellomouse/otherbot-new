@@ -7,8 +7,8 @@ const { stripFormatting } = require('./utils');
 /** Represents an IRC client */
 class Client extends EventEmitter {
   /**
-   * @param {Object<string, any>} config The config object
-  */
+   * @param {object<string, any>} config The config object
+   */
   constructor(config) {
     super();
     this.config = config;
