@@ -1,7 +1,7 @@
 module.exports = {
   extends: [
     "eslint:recommended",
-    "eslint-config-google",
+    "@hellomouse",
   ],
   parserOptions: {
     ecmaVersion: 8,

@@ -1,7 +1,8 @@
 {
   "devDependencies": {
+    "@hellomouse/eslint-config": "^1.1.4",
     "eslint": "^6.4.0",
-    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-jsdoc": "^15.9.2",
     "lerna": "^3.16.4"
   },
   "name": "otherbot-new",
