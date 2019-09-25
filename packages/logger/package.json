@@ -1,0 +1,23 @@
+{
+  "name": "@hellomouse/logger",
+  "version": "1.0.0",
+  "description": "Logger for Elyza",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "logger",
+    "irc",
+    "elyza"
+  ],
+  "author": "Hellomouse",
+  "maintainers": [
+    "Bowserinator"
+  ],
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
+}
